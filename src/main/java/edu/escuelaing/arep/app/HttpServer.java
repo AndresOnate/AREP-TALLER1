@@ -55,8 +55,7 @@ public class HttpServer
             }
             if(uriStr.contains("movies")){
                 uriStr = URLDecoder.decode(uriStr, "UTF-8");
-                String movieJSON = getMovieInformation(uriStr);
-                outputLine = HTMLBuilder.httpMovieData(movieJSON);
+                outputLine =  getMovieInformation(uriStr);
             }else{
                 outputLine = HTMLBuilder.httpClientHtml();
             }
@@ -70,14 +69,16 @@ public class HttpServer
     }
 
     public static String getMovieInformation(String uriStr ){
+        String title = uriStr.split("=")[1].toLowerCase();
         try {
-            String title = uriStr.split("=")[1];
             String movieJSON = myMoviesAPI.connectToMoviesAPI(title);
-            return  movieJSON;
+            if(movieJSON != null) {
+                return HTMLBuilder.httpMovieData(movieJSON);
+            }
         }catch (IOException e){
             e.printStackTrace();
         }
-        return HTMLBuilder.httpError();
+        return HTMLBuilder.httpError(title);
     }
 }
 

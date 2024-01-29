@@ -44,8 +44,11 @@ public class APIController {
 
                 // print result
                 System.out.println(response.toString());
-                cache.put(movie, response.toString());
-                movieJSON = response.toString();
+
+                if(!response.toString().equals("{\"Response\":\"False\",\"Error\":\"Movie not found!\"}")){
+                    cache.put(movie, response.toString());
+                    movieJSON = response.toString();
+                }
             } else {
                 System.out.println("GET request not worked");
             }

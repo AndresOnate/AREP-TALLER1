@@ -115,21 +115,11 @@ public class HTMLBuilder {
         return outputLine;
     }
 
-    public static String httpError() {
+    public static String httpError(String title) {
         String outputLine = "HTTP/1.1 400 Not Found\r\n"
-                + "Content-Type:text/html\r\n"
+                + "Content-Type:application/json\r\n"
                 + "\r\n"
-                + "<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "    <head>\n" +
-                "        <title>Form Example</title>\n" +
-                "        <meta charset=\"UTF-8\">\n" +
-                "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                "    </head>\n" +
-                "    <body>\n" +
-                "<h1>Error</h1>" +
-                "    </body>\n" +
-                "</html>";
+                + "{ \"Not Found\": \"" + title + " movie not found\"}";
         return outputLine;
     }
 
