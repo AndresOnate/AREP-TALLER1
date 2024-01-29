@@ -54,10 +54,9 @@ public class HttpServer
                 }
             }
             if(uriStr.contains("movies")){
-                System.out.println("=====================");
                 uriStr = URLDecoder.decode(uriStr, "UTF-8");
-                String movieInformation = getMovieInformation(uriStr);
-                outputLine = HTMLBuilder.httpMovieInformation(movieInformation);
+                String movieJSON = getMovieInformation(uriStr);
+                outputLine = HTMLBuilder.httpMovieData(movieJSON);
             }else{
                 outputLine = HTMLBuilder.httpClientHtml();
             }

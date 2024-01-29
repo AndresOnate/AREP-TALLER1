@@ -1,58 +1,8 @@
 package edu.escuelaing.arep.app;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+
 
 public class HTMLBuilder {
-
-
-    public static String httpMovieInformation(String movieData) {
-        System.out.println("Data:  " + movieData);
-        JSONObject movieObject = new JSONObject(movieData);
-        System.out.println(movieObject.toString());
-
-        StringBuilder tableHtml = new StringBuilder();
-        tableHtml.append("<table border=\"1\">\n");
-        for (String key : movieObject.keySet()) {
-            if (key.equals("Ratings")) {
-                // Tratar "Ratings" como un array
-                JSONArray ratingsArray = movieObject.getJSONArray(key);
-                tableHtml.append("<tr><td>").append(key).append("</td><td>").append(parseRatingsArray(ratingsArray)).append("</td></tr>\n");
-            } else {
-                // Tratar otras claves como cadenas
-                String value = movieObject.getString(key);
-                tableHtml.append("<tr><td>").append(key).append("</td><td>").append(value).append("</td></tr>\n");
-            }
-        }
-        tableHtml.append("</table>");
-        return "HTTP/1.1 200 OK\r\n"
-                + "Content-Type:text/html\r\n"
-                + "\r\n"
-                + "<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "    <head>\n" +
-                "        <title>Movies Information</title>\n" +
-                "        <meta charset=\"UTF-8\">\n" +
-                "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                "    </head>\n" +
-                "    <body>\n" +
-                "        " + tableHtml.toString() +
-                "    </body>\n" +
-                "</html>";
-    }
-
-
-    private static String parseRatingsArray(JSONArray ratingsArray) {
-        // Parsear el array de ratings y construir una representación en cadena
-        StringBuilder ratingsHtml = new StringBuilder();
-        for (int i = 0; i < ratingsArray.length(); i++) {
-            JSONObject ratingObject = ratingsArray.getJSONObject(i);
-            String source = ratingObject.getString("Source");
-            String value = ratingObject.getString("Value");
-            ratingsHtml.append("(").append(source).append(": ").append(value).append(") ");
-        }
-        return ratingsHtml.toString();
-    }
 
     public static String httpClientHtml() {
         String outputLine =
@@ -65,6 +15,50 @@ public class HTMLBuilder {
                         "        <title>Movies Information</title>\n" +
                         "        <meta charset=\"UTF-8\">\n" +
                         "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                        "        <style>\n" +
+                        "            body {\n" +
+                        "                font-family: Arial, sans-serif;\n" +
+                        "\t\tflex-direction: column;\n" +
+                        "\t\tdisplay: flex;\n" +
+                        "                align-items: center;\n" +
+                        "                justify-content: center;\n" +
+                        "            }\n" +
+                        "\n" +
+                        "            h1 {\n" +
+                        "                color: #333;\n" +
+                        "            }\n" +
+                        "\n" +
+                        "            form {\n" +
+                        "                margin-bottom: 20px;\n" +
+                        "            }\n" +
+                        "\n" +
+                        "            label {\n" +
+                        "                font-weight: bold;\n" +
+                        "            }\n" +
+                        "\n" +
+                        "            input {\n" +
+                        "                padding: 5px;\n" +
+                        "            }\n" +
+                        "\n" +
+                        "            table {\n" +
+                        "                width: 100%;\n" +
+                        "                border-collapse: collapse;\n" +
+                        "                margin-top: 20px;\n" +
+                        "            }\n" +
+                        "\n" +
+                        "            table, th, td {\n" +
+                        "                border: 1px solid #ddd;\n" +
+                        "            }\n" +
+                        "\n" +
+                        "            th, td {\n" +
+                        "                padding: 10px;\n" +
+                        "                text-align: left;\n" +
+                        "            }\n" +
+                        "\n" +
+                        "            tr:nth-child(even) {\n" +
+                        "                background-color: #f9f9f9;\n" +
+                        "            }\n" +
+                        "        </style>\n" +
                         "    </head>\n" +
                         "    <body>\n" +
                         "        <h1>Get Movie Information</h1>\n" +
@@ -80,11 +74,40 @@ public class HTMLBuilder {
                         "                let nameVar = document.getElementById(\"title\").value;\n" +
                         "                const xhttp = new XMLHttpRequest();\n" +
                         "                xhttp.onload = function() {\n" +
-                        "                    document.getElementById(\"getrespmsg\").innerHTML =\n" +
-                        "                    this.responseText;\n" +
+                        "                    const movieData = this.responseText;\n" +
+                        "                    buildTableFromJson(movieData);\n" +
                         "                }\n" +
-                        "                xhttp.open(\"GET\", \"/movies?name=\"+ nameVar);\n" +
+                        "                xhttp.open(\"GET\", \"/movies?name=\"+ encodeURIComponent(nameVar));\n" +
                         "                xhttp.send();\n" +
+                        "            }\n" +
+                        "\n" +
+                        "            function buildTableFromJson(movieData) {\n" +
+                        "                const movieObject = JSON.parse(movieData);\n" +
+                        "\n" +
+                        "                const tableHtml = \"<table border='1'>\" +\n" +
+                        "                    buildRowsFromObject(movieObject) +\n" +
+                        "                    \"</table>\";\n" +
+                        "\n" +
+                        "                document.getElementById(\"getrespmsg\").innerHTML = tableHtml;\n" +
+                        "            }\n" +
+                        "\n" +
+                        "            function buildRowsFromObject(obj) {\n" +
+                        "                return Object.entries(obj).map(([key, value]) => {\n" +
+                        "                    return `<tr><td>${key}</td><td>${formatValue(value)}</td></tr>`;\n" +
+                        "                }).join(\"\");\n" +
+                        "            }\n" +
+                        "\n" +
+                        "            function formatValue(value) {\n" +
+                        "                if (Array.isArray(value)) {\n" +
+                        "                    // Si es una lista, construir una cadena con los elementos de la lista\n" +
+                        "                    return \"\" + value.map(formatValue).join(\", \") + \"\";\n" +
+                        "                } else if (typeof value === 'object') {\n" +
+                        "                    // Si es un objeto, construir una cadena con los elementos del objeto\n" +
+                        "                    return \"{\" + Object.entries(value).map(([subKey, subValue]) => `${subKey}: \t\t\t\t${formatValue(subValue)}`).join(\", \") + \"}\";\n" +
+                        "                } else {\n" +
+                        "                    // Si es un valor simple, mostrar tal cual\n" +
+                        "                    return value;\n" +
+                        "                }\n" +
                         "            }\n" +
                         "        </script>\n" +
                         "    </body>\n" +
@@ -107,6 +130,14 @@ public class HTMLBuilder {
                 "<h1>Error</h1>" +
                 "    </body>\n" +
                 "</html>";
+        return outputLine;
+    }
+
+    public static String httpMovieData(String movieJSON){
+        String outputLine = "HTTP/1.1 200 OK\r\n"
+                + "Content-Type: application/json\r\n"
+                + "\r\n"
+                + movieJSON;
         return outputLine;
     }
 
