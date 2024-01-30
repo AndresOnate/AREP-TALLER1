@@ -7,15 +7,39 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class APIController {
 
+/**
+ * The `APIController` class is responsible for handling HTTP requests related to movie information.
+ * It interacts with the Movies API to retrieve data and provides responses
+ * @Autor Andrés Oñate.
+ */
+public class APIController {
+    /**
+     * The user agent string to be used in HTTP requests to the Movies API.
+     */
     private static final String USER_AGENT = "Mozilla/5.0";
+    /**
+     * The base URL for making requests to the Movies API.
+     */
     private static final String GET_URL = "https://www.omdbapi.com/?apikey=4e3f8718&t=";
 
+    /**
+     * A cache to store already retrieved movie data, reducing the number of requests to the Movies API.
+     */
     private static ConcurrentHashMap<String,String> cache = new ConcurrentHashMap<>();
-
     public APIController(){}
 
+    /**
+     * Connects to the Movies API to retrieve information about a given movie.
+     *
+     * This method initiates a connection to the Movies API OMDb using a GET request with the specified movie title as a parameter.
+     * It checks if the movie information is already present in a cache, and if found, retrieves it directly from the cache.
+     * If the information is not in the cache, it performs a GET request to the Movies API and processes the response.
+     *
+     * @param movie The title of the movie to search for.
+     * @return A JSON string containing information about the movie if found, or null if the movie is not found.
+     * @throws IOException If an I/O error occurs while connecting to the API.
+     */
     public  String connectToMoviesAPI(String movie) throws IOException {
         String movieJSON = null;
         if(cache.containsKey(movie)){
@@ -26,11 +50,9 @@ public class APIController {
             HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("User-Agent", USER_AGENT);
-
             //The following invocation perform the connection implicitly before getting the code
             int responseCode = connection.getResponseCode();
             System.out.println("GET Response Code :: " + responseCode);
-
             if (responseCode == HttpURLConnection.HTTP_OK) { // success
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         connection.getInputStream()));
@@ -41,10 +63,8 @@ public class APIController {
                     response.append(inputLine);
                 }
                 in.close();
-
                 // print result
                 System.out.println(response.toString());
-
                 if(!response.toString().equals("{\"Response\":\"False\",\"Error\":\"Movie not found!\"}")){
                     cache.put(movie, response.toString());
                     movieJSON = response.toString();

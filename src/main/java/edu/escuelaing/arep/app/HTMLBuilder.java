@@ -1,9 +1,18 @@
 package edu.escuelaing.arep.app;
 
 
-
+/**
+ * The `HTMLBuilder` class provides methods for generating HTML responses
+ * that can be sent as part of HTTP responses in the context of handling movie information.
+ */
 public class HTMLBuilder {
 
+    /**
+     * Generates an HTML response for the client with a form to search for movie information.
+     * The HTML contains the structure for the web client
+     *
+     * @return A formatted HTML response for the client with a search form.
+     */
     public static String httpClientHtml() {
         String outputLine =
                 "HTTP/1.1 200 OK\r\n"
@@ -115,6 +124,13 @@ public class HTMLBuilder {
         return outputLine;
     }
 
+
+    /**
+     * Generates an HTTP response for a 400 Not Found
+     *
+     * @param title The title of the movie that was not found.
+     * @return An HTTP response string for a 400 Not Found error.
+     */
     public static String httpError(String title) {
         String outputLine = "HTTP/1.1 400 Not Found\r\n"
                 + "Content-Type:application/json\r\n"
@@ -123,6 +139,12 @@ public class HTMLBuilder {
         return outputLine;
     }
 
+    /**
+     * Generates an HTTP response for successful movie data retrieval with the provided JSON string.
+     *
+     * @param movieJSON The JSON string containing information about the movie.
+     * @return An HTTP response string for successful movie data retrieval.
+     */
     public static String httpMovieData(String movieJSON){
         String outputLine = "HTTP/1.1 200 OK\r\n"
                 + "Content-Type: application/json\r\n"

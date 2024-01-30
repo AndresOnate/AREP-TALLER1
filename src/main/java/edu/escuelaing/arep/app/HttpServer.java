@@ -1,9 +1,6 @@
 package edu.escuelaing.arep.app;
 
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,11 +9,23 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URLDecoder;
 
-
+/**
+ * The `HttpServer` class represents a simple HTTP server that listens on port 35000 and handles incoming HTTP requests.
+ * It utilizes a basic API for retrieving movie information and responds with HTML content based on the request URI.
+ *
+ * It supports requests related to movie information and provides a default HTML response.
+ */
 public class HttpServer
 {
+    /**
+     * Represents the API controller for fetching movie information.
+     */
     private static APIController myMoviesAPI = new APIController();
 
+
+    /**
+     * The main method that serves as the entry point for the HTTP server.
+     */
     public static void main( String[] args ) throws Exception
     {
         ServerSocket serverSocket = null;
@@ -68,6 +77,11 @@ public class HttpServer
         serverSocket.close();
     }
 
+    /**
+     * Retrieves movie information based on the provided URI and returns the corresponding HTML response.
+     * @param uriStr The URI containing the movie title information.
+     * @return The HTML response containing movie data or an error message.
+     */
     public static String getMovieInformation(String uriStr ){
         String title = uriStr.split("=")[1].toLowerCase();
         try {
