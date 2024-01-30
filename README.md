@@ -58,3 +58,32 @@ Como puede observar, la aplicación tiene un espacio donde puede ingresar el tí
 
 El servidor puede tardar unos segundos mientras obtiene la información del API. La información de la película es mostrada en una tabla. Si desea consultar otra película, ingrese el título y vuelva a dar en el botón. 
    
+## Ejecutando las Pruebas.  
+
+A continuación se muestra cómo ejecutar las pruebas desde la línea de comandos y un IDE como IntelliJ.
+
+1. Navegue al directorio del proyecto con la línea de comandos.
+2. Ejecute el siguiente comando:
+   
+   ``` mvn test ```
+3. Debe mostrarse en pantalla que las pruebas fueron exitosas.
+
+   ![image](https://github.com/AndresOnate/AREP-TALLER1/assets/63562181/dfa43a9e-6c48-474a-95f2-89a070904051)
+
+4. Puede ejecutar las pruebas desde un IDE como IntelliJ:
+
+   ![image](https://github.com/AndresOnate/AREP-TALLER1/assets/63562181/68fbe63e-15e1-4564-b37b-947f620f0754)
+
+## Construido Con. 
+
+- Maven - Administración de dependencias
+
+## Versión
+
+1.0.0
+
+## Autores
+
+- Andrés Camilo Oñate Quimbayo
+
+   
