@@ -19,14 +19,11 @@ public class HttpServerTest {
 
     @Test
     public void testGetMovieInformation_InvalidTitle() {
-        // Simular una solicitud de película con título no válido
         String uriStr = "/movies?title=NonExistentMovie";
         APIController movieAPI = new APIController();
         HttpServer httpServer = new HttpServer();
         String result = httpServer.getMovieInformation(uriStr);
         System.out.println(result);
-
-        // Verificar que el resultado contiene un mensaje de error
         assertTrue(result.contains("Not Found"));
         assertTrue(result.contains("nonexistentmovie movie not found"));
     }
