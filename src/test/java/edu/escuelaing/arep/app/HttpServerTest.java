@@ -7,7 +7,7 @@ public class HttpServerTest {
 
 
     @Test
-    public void testGetMovieInformation_ValidTitle() {
+    public void testGetMovieInformationValidTitle() {
         String uriStr = "/movies?title=Inception";
         APIController movieAPI = new APIController();
         HttpServer httpServer = new HttpServer();
@@ -18,7 +18,7 @@ public class HttpServerTest {
     }
 
     @Test
-    public void testGetMovieInformation_InvalidTitle() {
+    public void testGetMovieInformationInvalidTitle() {
         String uriStr = "/movies?title=NonExistentMovie";
         APIController movieAPI = new APIController();
         HttpServer httpServer = new HttpServer();

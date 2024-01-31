@@ -9,8 +9,6 @@ public class HTMLBuilderTest {
     public void testBuildHttpMovieData() {
         String movieJSON = "{\"title\":\"Inception\",\"year\":2010,\"genre\":\"Sci-Fi\"}";
         String result = HTMLBuilder.httpMovieData(movieJSON);
-
-        // Verificar que el resultado contiene información de la película
         assertTrue(result.contains("Inception"));
         assertTrue(result.contains("2010"));
         assertTrue(result.contains("Sci-Fi"));

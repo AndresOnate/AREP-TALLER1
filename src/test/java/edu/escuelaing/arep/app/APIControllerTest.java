@@ -18,7 +18,6 @@ public class APIControllerTest {
 
     @Test
     public void testConnectToMoviesAPIMovieNotExist() throws IOException {
-        // Configuración de la prueba
         APIController ApiController = new APIController();
         String actualResponse = ApiController.connectToMoviesAPI("NonExistentMovie");
         assertNull(actualResponse);
