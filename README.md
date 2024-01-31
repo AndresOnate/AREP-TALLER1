@@ -9,12 +9,17 @@ Se construye la aplicación de tal forma que cumpla con los requisitos especific
 - La clase `HttpServer` contiene la lógica del servidor. Recibe las solicitudes de los usuarios y hace el llamado a la API.
 - El servidor entrega a los usuarios un cliente asíncrono al cual pueden acceder desde cualquier navegador.
 - Al realizar una consulta desde la aplicación, el servidor hace el llamado a una API externa.
-- La respuesta que es dada por la API es validada para devolver al usuario la información correcta. En caso de que la película n
+- La respuesta que es dada por la API es validada para devolver al usuario la información correcta. En caso de que la película no se encuentra en la API, se mostrará al usuario un mensaje adecuado.
 - La clase `APIController` realiza la conexión a OMDb API en el método `connectToMoviesAPI`, al cual se le pasa como argumento el título de la película. Si la película es encontrada, se retorna un String con los datos, de lo contrario, se establecen mecanismos para validar si la película no fue encontrada y mostrar al usuario el estado de la consulta.
 - `APIController` almacena en una estructura de datos concurrente `ConcurrentHashMap` un caché de las consultas hechas a la API, lo que acorta considerablemente los tiempos de respuesta.
 - La clase `HTMLBuilder` ofrece métodos para construir las respuestas HTML que son enviadas a los usuarios.
+
+## Extensión de la aplicación.
+
 -  La clase `APIController` implementa la interface `MovieAPI`,  lo que permitirá cambiar fácilmente la API de películas o agregar nuevas funcionalidades.
+-  De igual forma, el atributo `GET_URL` de la clase `APIController` permite cambiar de proveedor de forma sencilla, solo debe ajustar la URL de forma que permita acceder a los recursos.
 -  El caché puede ser implementado mediante servicios Cloud como Redis en Azure.
+
 
 ## Guía de Inicio
 
