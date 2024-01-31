@@ -95,7 +95,7 @@ A continuación se muestra cómo ejecutar las pruebas desde la línea de comando
 
 ## Construido Con. 
 
-- Maven - Administración de dependencias
+- Maven - Administrador de dependencias
 
 ## Versión
 
