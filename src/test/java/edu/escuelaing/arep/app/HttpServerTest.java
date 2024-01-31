@@ -9,7 +9,7 @@ public class HttpServerTest {
     @Test
     public void testGetMovieInformation_ValidTitle() {
         String uriStr = "/movies?title=Inception";
-        APIController movieAPI = new APIController();
+        OMDbAPIController movieAPI = new OMDbAPIController();
         HttpServer httpServer = new HttpServer();
         String result = httpServer.getMovieInformation(uriStr);
         assertTrue(result.contains("Inception"));
@@ -21,7 +21,7 @@ public class HttpServerTest {
     public void testGetMovieInformation_InvalidTitle() {
         // Simular una solicitud de película con título no válido
         String uriStr = "/movies?title=NonExistentMovie";
-        APIController movieAPI = new APIController();
+        OMDbAPIController movieAPI = new OMDbAPIController();
         HttpServer httpServer = new HttpServer();
         String result = httpServer.getMovieInformation(uriStr);
         System.out.println(result);

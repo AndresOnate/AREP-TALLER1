@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * It interacts with the Movies API to retrieve data and provides responses
  * @Autor Andrés Oñate.
  */
-public class APIController {
+public class OMDbAPIController implements MovieAPI {
     /**
      * The user agent string to be used in HTTP requests to the Movies API.
      */
@@ -27,7 +27,7 @@ public class APIController {
      * A cache to store already retrieved movie data, reducing the number of requests to the Movies API.
      */
     private static ConcurrentHashMap<String,String> cache = new ConcurrentHashMap<>();
-    public APIController(){}
+    public OMDbAPIController(){}
 
     /**
      * Connects to the Movies API to retrieve information about a given movie.

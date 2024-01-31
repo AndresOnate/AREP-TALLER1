@@ -6,21 +6,21 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
-public class APIControllerTest {
+public class OMDbAPIControllerTest {
 
     @Test
     public void testConnectToMoviesAPI() throws IOException {
         String expectedResponse = "{\"Title\":\"Inception\",";
-        APIController apiController = new APIController();
-        String actualResponse = apiController.connectToMoviesAPI("Inception");
+        OMDbAPIController OMDbApiController = new OMDbAPIController();
+        String actualResponse = OMDbApiController.connectToMoviesAPI("Inception");
         assertTrue(actualResponse.contains(expectedResponse));
     }
 
     @Test
     public void testConnectToMoviesAPIMovieNotExist() throws IOException {
         // Configuración de la prueba
-        APIController apiController = new APIController();
-        String actualResponse = apiController.connectToMoviesAPI("NonExistentMovie");
+        OMDbAPIController OMDbApiController = new OMDbAPIController();
+        String actualResponse = OMDbApiController.connectToMoviesAPI("NonExistentMovie");
         assertNull(actualResponse);
     }
 
