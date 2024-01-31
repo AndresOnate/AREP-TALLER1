@@ -20,7 +20,7 @@ public class HttpServer
     /**
      * Represents the API controller for fetching movie information.
      */
-    private static MovieAPI myMoviesAPI = new OMDbAPIController();
+    private static MovieAPI myMoviesAPI = new APIController();
 
 
     /**
