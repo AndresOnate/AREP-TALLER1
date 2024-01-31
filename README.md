@@ -2,6 +2,20 @@
 
 En este taller se implementó un servidor que funciona como gateway para encapsular llamadas a servicios web externos. La aplicación que entrega el servidor a los clientes web permite consultar información de películas de cine, esta información es obtenida de OMDb API.
 
+## Diseño de la aplicación
+
+Se construye la aplicación de tal forma que cumpla con los requisitos especificados en el enunciado del taller.
+
+- La clase `HttpServer` contiene la lógica del servidor. Recibe las solicitudes de los usuarios y hace el llamado a la API.
+- El servidor entrega a los usuarios un cliente asíncrono al cual pueden acceder desde cualquier navegador.
+- Al realizar una consulta desde la aplicación, el servidor hace el llamado a una API externa.
+- La respuesta que es dada por la API es validada para devolver al usuario la información correcta. En caso de que la película n
+- La clase `APIController` realiza la conexión a OMDb API en el método `connectToMoviesAPI`, al cual se le pasa como argumento el título de la película. Si la película es encontrada, se retorna un String con los datos, de lo contrario, se establecen mecanismos para validar si la película no fue encontrada y mostrar al usuario el estado de la consulta.
+- `APIController` almacena en una estructura de datos concurrente `ConcurrentHashMap` un caché de las consultas hechas a la API, lo que acorta considerablemente los tiempos de respuesta.
+- La clase `HTMLBuilder` ofrece métodos para construir las respuestas HTML que son enviadas a los usuarios.
+-  La clase `APIController` implementa la interface `MovieAPI`,  lo que permitirá cambiar fácilmente la API de películas o agregar nuevas funcionalidades.
+-  El caché puede ser implementado mediante servicios Cloud como Redis en Azure.
+
 ## Guía de Inicio
 
 Las siguientes instrucciones le permitirán descargar una copia y ejecutar la aplicación en su máquina local.
@@ -53,11 +67,16 @@ Debería ver en pantalla lo siguiente:
 ![image](https://github.com/AndresOnate/AREP-TALLER1/assets/63562181/e714baba-5970-4b20-841c-441e59a1a87f)
 
 Como puede observar, la aplicación tiene un espacio donde puede ingresar el título de la película. Una vez ingrese el título, presione el botón `Search`, 
+La información de la película es mostrada en una tabla.
 
 ![image](https://github.com/AndresOnate/AREP-TALLER1/assets/63562181/2f65c2e5-b14b-4449-98af-4bde4b6f6662)
 
-El servidor puede tardar unos segundos mientras obtiene la información del API. La información de la película es mostrada en una tabla. Si desea consultar otra película, ingrese el título y vuelva a dar en el botón. 
-   
+El servidor puede tardar unos segundos mientras obtiene la información del API.  Si desea consultar otra película, ingrese el título y vuelva a dar en el botón. 
+
+Si  la API retorna el error `"{"Response":"False","Error":"Movie not found!"}"`, la aplicación informará a los usuarios:
+
+![image](https://github.com/AndresOnate/AREP-TALLER1/assets/63562181/af768ff7-53ec-437f-a880-300ed1cee002)
+
 ## Ejecutando las Pruebas.  
 
 A continuación se muestra cómo ejecutar las pruebas desde la línea de comandos y un IDE como IntelliJ.
